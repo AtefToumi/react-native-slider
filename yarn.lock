@@ -2227,6 +2227,7 @@ __metadata:
     "@types/react-native": 0.65.2
     babel-loader: 8.2.2
     eslint: 7.32.0
+    expo-linear-gradient: ^11.0.3
     patch-package: 6.4.7
     prettier: 2.4.1
     react: 17.0.2
@@ -7240,6 +7241,15 @@ __metadata:
     snapdragon: ^0.8.1
     to-regex: ^3.0.1
   checksum: 1781d422e7edfa20009e2abda673cadb040a6037f0bd30fcd7357304f4f0c284afd420d7622722ca4a016f39b6d091841ab57b401c1f7e2e5131ac65b9f14fa1
+  languageName: node
+  linkType: hard
+
+"expo-linear-gradient@npm:^11.0.3":
+  version: 11.2.0
+  resolution: "expo-linear-gradient@npm:11.2.0"
+  peerDependencies:
+    expo: "*"
+  checksum: 049a88b4cb8e7d64440c8bb694f576b4c24af2e9271f26999f1f4cdda790b3a437d68a69005a486ab960a80b6ec074923ae9fa10feeeb8a60b0c265787a52fee
   languageName: node
   linkType: hard
 

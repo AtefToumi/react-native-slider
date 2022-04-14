@@ -14,6 +14,7 @@ import {
 // styles
 import {defaultStyles as styles} from './styles';
 import type {Dimensions, SliderProps, SliderState} from './types';
+import { LinearGradient } from 'expo-linear-gradient';
 
 type RectReturn = {
     containsPoint: (nativeX: number, nativeY: number) => boolean;
@@ -198,9 +199,7 @@ export class Slider extends PureComponent<SliderProps, SliderState> {
             const newTrackMarkValues = normalizeValue(props, props.trackMarks);
             const statePatch = {} as SliderState;
 
-            if (
-                state.trackMarksValues
-            ) {
+            if (state.trackMarksValues) {
                 statePatch.trackMarksValues = updateValues({
                     values: state.trackMarksValues,
                     newValues: newTrackMarkValues,
@@ -358,13 +357,19 @@ export class Slider extends PureComponent<SliderProps, SliderState> {
         const standardRatio = this._getRatio(value);
 
         const ratio = I18nManager.isRTL ? 1 - standardRatio : standardRatio;
-        return ratio * ((vertical ? containerSize.height : containerSize.width) - thumbSize.width);
+        return (
+            ratio *
+            ((vertical ? containerSize.height : containerSize.width) -
+                thumbSize.width)
+        );
     };
-    _getValue = (gestureState: {dx: number, dy: number}) => {
+    _getValue = (gestureState: {dx: number; dy: number}) => {
         const {containerSize, thumbSize, values} = this.state;
         const {maximumValue, minimumValue, step, vertical} = this.props;
         const length = containerSize.width - thumbSize.width;
-        const thumbLeft = vertical ? this._previousLeft + (gestureState.dy * -1) : this._previousLeft + gestureState.dx;
+        const thumbLeft = vertical
+            ? this._previousLeft + gestureState.dy * -1
+            : this._previousLeft + gestureState.dx;
         const nonRtlRatio = thumbLeft / length;
         const ratio = I18nManager.isRTL ? 1 - nonRtlRatio : nonRtlRatio;
         let minValue = minimumValue;
@@ -715,10 +720,18 @@ export class Slider extends PureComponent<SliderProps, SliderState> {
                         ))}
                     </View>
                 )}
-                <View
+                <LinearGradient
                     {...other}
-                    style={[styles.container, vertical ? {transform: [{rotate: '-90deg' }]} : {}, containerStyle]}
-                    onLayout={this._measureContainer}>
+                    style={[
+                        styles.container,
+                        vertical ? {transform: [{rotate: '-90deg'}]} : {},
+                        containerStyle,
+                    ]}
+                    onLayout={this._measureContainer}
+                    colors={['yellow', 'red']}
+                    start={{ x: 0, y: 0 }}
+                    end={{ x: 1, y: 0 }}>
+                        
                     <View
                         renderToHardwareTextureAndroid
                         style={[
@@ -729,7 +742,7 @@ export class Slider extends PureComponent<SliderProps, SliderState> {
                             trackStyle,
                         ]}
                         onLayout={this._measureTrack}
-                    />
+                    >
                     <Animated.View
                         renderToHardwareTextureAndroid
                         style={[styles.track, trackStyle, minimumTrackStyle]}
